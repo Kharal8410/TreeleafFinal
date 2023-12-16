@@ -137,15 +137,6 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-2/12 ms-auto my-6 ">
-        <Link
-          to="/profile"
-          className=" text-lg py-2 px-4 mx-auto bg-blue-500 text-white rounded-full hover:bg-blue-700"
-        >
-          Profile
-        </Link>
-      </div>
-
       <Form
         form={formInput}
         handleChange={handleChange}
@@ -166,6 +157,15 @@ const Home = () => {
           handleUpdate={handleUpdate}
         />
       )}
+
+      <div className="w-2/12 ms-auto my-6 ">
+        <Link
+          to="/profile"
+          className=" text-lg py-2 px-4 mx-auto bg-blue-500 text-white rounded-full hover:bg-blue-700"
+        >
+          Profile
+        </Link>
+      </div>
     </>
   );
 };

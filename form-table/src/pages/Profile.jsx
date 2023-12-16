@@ -1,50 +1,16 @@
 import { useEffect, useState } from "react";
-import Form from "../components/Form";
+
 import Table from "../components/Table";
 import { Link } from "react-router-dom";
 import Popup from "../components/Popup";
 
 const Profile = () => {
-  //   const [formInput, setFormInput] = useState({
-  //     name: "",
-  //     email: "",
-  //     phoneNum: "",
-  //     dateOfBirth: "",
-  //     city: "",
-  //     district: "",
-  //     province: "",
-  //     country: "Nepal",
-  //   });
-
   const [allFormData, setAllFormData] = useState([]);
   const [selectedKey, setSelectedKey] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   // Initialize updatedFormData state
   const [updatedFormData, setUpdatedFormData] = useState(null);
-
-  //   const handleSubmit = (e) => {
-  //     if (formInput.phoneNum.length < 7) {
-  //       e.preventDefault();
-  //       alert("Phone number must be at least 7 characters");
-  //       return;
-  //     }
-  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (!emailRegex.test(formInput.email)) {
-  //       e.preventDefault();
-  //       alert("Email must be in email format (e.g., name@example.com)");
-  //       return;
-  //     }
-
-  //     // Add new data to localStorage
-  //     const timeStamp = new Date().getTime();
-  //     const key = `formInput_${timeStamp}`;
-  //     localStorage.setItem(key, JSON.stringify(formInput));
-
-  //     // Update the state to include the new data
-  //     setAllFormData([...allFormData, { ...formInput, key }]);
-  //     setIsPopupOpen(false); // Close the Popup after updating data
-  //   };
 
   const handleEdit = (key) => {
     setSelectedKey(key);
