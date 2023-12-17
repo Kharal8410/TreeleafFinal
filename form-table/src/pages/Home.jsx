@@ -3,6 +3,7 @@ import Form from "../components/Form";
 import Table from "../components/Table";
 import { Link } from "react-router-dom";
 import Popup from "../components/Popup";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [formInput, setFormInput] = useState({
@@ -20,7 +21,6 @@ const Home = () => {
   const [selectedKey, setSelectedKey] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Initialize updatedFormData state
   const [updatedFormData, setUpdatedFormData] = useState(null);
 
   const handleChange = (e) => {
@@ -31,15 +31,16 @@ const Home = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (formInput.phoneNum.length < 7) {
       e.preventDefault();
-      alert("Phone number must be at least 7 characters");
+      toast.error("Phone number must be at least 7 characters");
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formInput.email)) {
       e.preventDefault();
-      alert("Email must be in email format (e.g., name@example.com)");
+      toast.error("Email must be in email format (e.g., name@example.com)");
       return;
     }
 
@@ -47,10 +48,17 @@ const Home = () => {
     const timeStamp = new Date().getTime();
     const key = `formInput_${timeStamp}`;
     localStorage.setItem(key, JSON.stringify(formInput));
-
-    // Update the state to include the new data
-    setAllFormData([...allFormData, { ...formInput, key }]);
-    setIsPopupOpen(false);
+    setFormInput({
+      name: "",
+      email: "",
+      phoneNum: "",
+      dateOfBirth: "",
+      city: "",
+      district: "",
+      province: "",
+      country: "Nepal",
+    });
+    toast.success("User added successfully");
   };
 
   const handleClear = () => {
@@ -69,7 +77,6 @@ const Home = () => {
   const handleEdit = (key) => {
     setSelectedKey(key);
 
-    // Initialize updatedFormData with the existing data for the selected key
     setUpdatedFormData(allFormData.find((data) => data.key === key));
 
     setIsPopupOpen(true);
@@ -81,28 +88,19 @@ const Home = () => {
     });
   };
   const handleUpdate = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
 
-    // Find the index of the updated data in the array
     const indexToUpdate = allFormData.findIndex(
       (data) => data.key === selectedKey
     );
 
     if (indexToUpdate !== -1) {
-      // Create a copy of the current state
       const updatedFormDataArray = [...allFormData];
-
-      // Update the data at the found index with the updatedFormData
       updatedFormDataArray[indexToUpdate] = updatedFormData;
-
-      // Update the data in localStorage
       localStorage.setItem(selectedKey, JSON.stringify(updatedFormData));
-
-      // Update the state to reflect the changes
       setAllFormData(updatedFormDataArray);
-
-      // Close the Popup after updating data
       setIsPopupOpen(false);
+      toast.success("User Updated Successfully");
     }
   };
 
@@ -114,6 +112,7 @@ const Home = () => {
     localStorage.removeItem(key);
     const updatedFormDataArray = allFormData.filter((data) => data.key !== key);
     setAllFormData(updatedFormDataArray);
+    toast.success("User Deleted Successfully");
   };
 
   useEffect(() => {
@@ -122,12 +121,10 @@ const Home = () => {
       return { ...JSON.parse(localStorage.getItem(key)), key };
     });
 
-    // Filter out items with undefined names before sorting
     const filteredFormDataArray = formDataArray.filter(
       (data) => data.name !== undefined
     );
 
-    // Sort the array by name, handling undefined values
     const sortedFormDataArray = filteredFormDataArray.sort((a, b) =>
       (a.name || "").localeCompare(b.name || "")
     );
@@ -148,7 +145,7 @@ const Home = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
-      {/* Popup for editing */}
+
       {isPopupOpen && (
         <Popup
           form={updatedFormData || allFormData}

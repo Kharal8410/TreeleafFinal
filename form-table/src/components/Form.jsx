@@ -3,7 +3,7 @@ const Form = ({ form, handleChange, handleSubmit, handleClear }) => {
   return (
     <div className="w-2/6 m-auto">
       <form
-        className="w-full  shadow-2xl p-7 mt-4 rounded-xl  border-t-4 border-b-4 border-black "
+        className="w-full  shadow-2xl shadow-slate-400 p-7 mt-4 rounded-xl border border-t-4 border-b-4 border-black bg-slate-200 "
         onSubmit={handleSubmit}
       >
         <h2 className="text-center font-bold text-3xl my-2">Users Form</h2>

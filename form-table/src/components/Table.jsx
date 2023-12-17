@@ -25,7 +25,7 @@ const Table = ({ formDataArray, handleEdit, handleDelete, handleSort }) => {
   };
 
   return (
-    <div className="w-10/12 m-auto">
+    <div className="w-10/12 m-auto my-4">
       <h1 className="text-center font-bold text-3xl my-2">Users Data</h1>
       <table className="w-full my-6 bg-slate-200">
         <thead>

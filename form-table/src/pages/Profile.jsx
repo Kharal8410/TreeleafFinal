@@ -3,19 +3,18 @@ import { useEffect, useState } from "react";
 import Table from "../components/Table";
 import { Link } from "react-router-dom";
 import Popup from "../components/Popup";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const [allFormData, setAllFormData] = useState([]);
   const [selectedKey, setSelectedKey] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Initialize updatedFormData state
   const [updatedFormData, setUpdatedFormData] = useState(null);
 
   const handleEdit = (key) => {
     setSelectedKey(key);
 
-    // Initialize updatedFormData with the existing data for the selected key
     setUpdatedFormData(allFormData.find((data) => data.key === key));
 
     setIsPopupOpen(true);
@@ -27,28 +26,19 @@ const Profile = () => {
     });
   };
   const handleUpdate = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
 
-    // Find the index of the updated data in the array
     const indexToUpdate = allFormData.findIndex(
       (data) => data.key === selectedKey
     );
 
     if (indexToUpdate !== -1) {
-      // Create a copy of the current state
       const updatedFormDataArray = [...allFormData];
-
-      // Update the data at the found index with the updatedFormData
       updatedFormDataArray[indexToUpdate] = updatedFormData;
-
-      // Update the data in localStorage
       localStorage.setItem(selectedKey, JSON.stringify(updatedFormData));
-
-      // Update the state to reflect the changes
       setAllFormData(updatedFormDataArray);
-
-      // Close the Popup after updating data
       setIsPopupOpen(false);
+      toast.success("User Updated Successfully");
     }
   };
 
@@ -60,6 +50,7 @@ const Profile = () => {
     localStorage.removeItem(key);
     const updatedFormDataArray = allFormData.filter((data) => data.key !== key);
     setAllFormData(updatedFormDataArray);
+    toast.success("User Deleted Successfully");
   };
 
   useEffect(() => {
@@ -67,13 +58,9 @@ const Profile = () => {
     const formDataArray = keys.map((key) => {
       return { ...JSON.parse(localStorage.getItem(key)), key };
     });
-
-    // Filter out items with undefined names before sorting
     const filteredFormDataArray = formDataArray.filter(
       (data) => data.name !== undefined
     );
-
-    // Sort the array by name, handling undefined values
     const sortedFormDataArray = filteredFormDataArray.sort((a, b) =>
       (a.name || "").localeCompare(b.name || "")
     );
@@ -96,7 +83,7 @@ const Profile = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
-      {/* Popup for editing */}
+
       {isPopupOpen && (
         <Popup
           form={updatedFormData || allFormData}
