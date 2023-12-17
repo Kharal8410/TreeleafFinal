@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-const Table = ({ formDataArray, handleEdit, handleDelete, handleSort }) => {
+const Table = ({ formDataArray, handleEdit, handleDelete }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedData, setSortedData] = useState([]);
 
@@ -34,7 +34,6 @@ const Table = ({ formDataArray, handleEdit, handleDelete, handleSort }) => {
               className="border-r border-l border-black cursor-pointer"
               onClick={() => {
                 toggleSortOrder();
-                handleSort();
               }}
             >
               Name {getSortIcon()}

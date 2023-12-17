@@ -61,11 +61,7 @@ const Profile = () => {
     const filteredFormDataArray = formDataArray.filter(
       (data) => data.name !== undefined
     );
-    const sortedFormDataArray = filteredFormDataArray.sort((a, b) =>
-      (a.name || "").localeCompare(b.name || "")
-    );
-
-    setAllFormData(sortedFormDataArray);
+    setAllFormData(filteredFormDataArray);
   }, []);
 
   return (
@@ -79,7 +75,7 @@ const Profile = () => {
         </Link>
       </div>
       <Table
-        formDataArray={allFormData.sort((a, b) => a.name.localeCompare(b.name))}
+        formDataArray={allFormData}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />

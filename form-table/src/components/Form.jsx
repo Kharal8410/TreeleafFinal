@@ -30,7 +30,7 @@ const Form = ({ form, handleChange, handleSubmit, handleClear }) => {
             Email:
           </label>
           <input
-            type="text"
+            type="email"
             id="email"
             name="email"
             placeholder="Enter your email"
@@ -64,7 +64,6 @@ const Form = ({ form, handleChange, handleSubmit, handleClear }) => {
             type="date"
             id="dateOfBirth"
             name="dateOfBirth"
-            required
             value={form.dateOfBirth}
             onChange={handleChange}
             className="border-2 border-black rounded-2xl p-1"
@@ -106,7 +105,6 @@ const Form = ({ form, handleChange, handleSubmit, handleClear }) => {
           <select
             name="province"
             id="province"
-            required
             value={form.province}
             onChange={handleChange}
             className="border-2 border-black rounded-2xl p-1 w-full"

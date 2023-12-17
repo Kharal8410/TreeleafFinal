@@ -32,15 +32,16 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formInput.phoneNum.length < 7) {
-      e.preventDefault();
-      toast.error("Phone number must be at least 7 characters");
-      return;
-    }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formInput.email)) {
       e.preventDefault();
       toast.error("Email must be in email format (e.g., name@example.com)");
+      return;
+    }
+
+    if (formInput.phoneNum.length < 7) {
+      e.preventDefault();
+      toast.error("Phone number must be at least 7 characters");
       return;
     }
 
@@ -120,16 +121,10 @@ const Home = () => {
     const formDataArray = keys.map((key) => {
       return { ...JSON.parse(localStorage.getItem(key)), key };
     });
-
     const filteredFormDataArray = formDataArray.filter(
       (data) => data.name !== undefined
     );
-
-    const sortedFormDataArray = filteredFormDataArray.sort((a, b) =>
-      (a.name || "").localeCompare(b.name || "")
-    );
-
-    setAllFormData(sortedFormDataArray);
+    setAllFormData(filteredFormDataArray);
   }, []);
 
   return (
@@ -141,7 +136,7 @@ const Home = () => {
         handleClear={handleClear}
       />
       <Table
-        formDataArray={allFormData.sort((a, b) => a.name.localeCompare(b.name))}
+        formDataArray={allFormData}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
